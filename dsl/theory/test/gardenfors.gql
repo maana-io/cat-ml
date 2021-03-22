@@ -1,0 +1,35 @@
+mutation add_conceptual_spaces {
+  cloneWorkspace(
+    source: "maana-gats-theory-category-q"
+    target: "maana-conceptual-spaces-gardenfors"
+  )
+  updateWorkspace(
+    input: {
+      id: "maana-conceptual-spaces-gardenfors"
+      name: "Gardenfor's Conceptual Spaces"
+      doc: "A computational knowledge model of Peter Gardenfor's Conceptual Spaces: The Geometry of Thought"
+    }
+  )
+  addKinds(
+    input: [
+      { name: "Dimension", doc: "", fields: [{ name: "", kind: "" }] }
+      { name: "Representation", doc: "", fields: [{ name: "", kind: "" }] }
+      { name: "Property", doc: "", fields: [{ name: "", kind: "" }] }
+      { name: "Concept", doc: "", fields: [{ name: "", kind: "" }] }
+      { name: "Semantic", doc: "", fields: [{ name: "", kind: "" }] }
+      { name: "Induction", doc: "", fields: [{ name: "", kind: "" }] }
+    ]
+  )
+  addFunctions(
+    input: [
+      {
+        name: "induce"
+        doc: ""
+        fields: [{ name: "", kind: "" }]
+        kind: "[Induction!]!"
+      }
+    ]
+  )
+  addInstances(input: [])
+  addFunctors(input: [{ category: "maana-q-knowledge" }])
+}

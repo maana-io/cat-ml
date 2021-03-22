@@ -1,0 +1,139 @@
+mutation add_cat_theory {
+  addTheory(
+    input: {
+      id: "cat"
+      name: "Category Theory"
+      types: [ "cat/type/ob", "cat/type/Hom" ]
+      terms: [ "cat/term/id", "cat/term/compose" ]
+    }
+  )
+}
+
+mutation add_cat_types {
+  addTypes(
+    input: [
+      { id: "cat/type/ob", name: "Ob" }
+      {
+        id: "cat/type/hom"
+        name: "Hom"
+        args: [ "cat/type/hom/arg/dom", "cat/type/hom/arg/cod" ]
+      }
+    ]
+  )
+}
+
+mutation add_cat_type_args {
+  addArguments(
+    input: [
+      { id: "cat/type/hom/arg/dom", name: "dom", type: "cat/type/ob" }
+      { id: "cat/type/hom/arg/cod", name: "cod", type: "cat/type/ob" }
+    ]
+  )
+}
+
+mutation add_cat_terms {
+  addTerms(
+    input: [
+      {
+        id: "cat/term/id"
+        name: "id"
+        args: [ "cat/type/ob/A" ]
+        type: "cat/type/hom"
+        typeBindings: [ "cat/bind/hom/dom=A", "cat/bind/hom/cod=A" ]
+      }
+      {
+        id: "cat/term/compose"
+        name: "compose"
+        args: [ "cat/type/hom/f", "cat/type/hom/g" ]
+        type: [ "cat/type/hom" ]
+        typeBindings: [ "cat/type/hom/dom=A", "cat/type/hom/cod=C" ]
+      }
+    ]
+  )
+}
+
+mutation add_cat_term_args {
+  addArguments(
+    input: [
+      { id: "cat/type/ob/A", name: "A", type: "cat/type/ob" }
+      { id: "cat/type/ob/B", name: "B", type: "cat/type/ob" }
+      { id: "cat/type/ob/C", name: "C", type: "cat/type/ob" }
+      {
+        id: "cat/term/compose/arg/f"
+        name: "f"
+        type: "cat/type/hom"
+        typeBindings: [
+          { id: "cat/type/hom/arg/dom", cvar: "cat/term/compose/cvar/a" }
+          { id: "cat/type/hom/arg/codom", cvar: "cat/term/compose/cvar/b" }
+        ]
+      }
+      {
+        id: "cat/term/compose/cvar/g"
+        name: "g"
+        type: "cat/type/hom"
+        args: [
+          { id: "cat/type/hom/arg/dom", cvar: "cat/term/compose/cvar/b" }
+          { id: "cat/type/hom/arg/codom", cvar: "cat/term/compose/cvar/c" }
+        ]
+      }
+    ]
+  )
+}
+
+mutation add_cat_bindings {
+  addBindings(
+    input: [
+      { id: "cat/bind/hom/dom=A", "argvar": "cat/type/hom/arg/dom", "argval": "cat/term/id/arg/a" },
+      { id: "cat/bind/hom/cod=A", "argvar": "cat/type/hom/arg/cod", "argval": "cat/term/id/arg/a" },
+    ]
+  )
+}
+
+mutation add_cat_axioms {
+  addAxioms(
+    input: [
+      {
+        id: "cat/axiom/associativity"
+        cvars: [
+          {
+            id: "cat/axiom/associativity/var/a"
+            name: "A"
+            type: "cat/type/ob"
+          }
+          { id: "cat/term/compose/var/b", name: "B", type: "cat/type/ob" }
+          { id: "cat/term/compose/var/c", name: "C", type: "cat/type/ob" }
+          { id: "cat/term/compose/var/c", name: "C", type: "cat/type/ob" }
+          {
+            id: "cat/term/compose/arg/f"
+            name: "f"
+            type: "cat/type/hom"
+            args: [
+              { id: "cat/type/hom/arg/dom", var: "cat/term/compose/var/a" }
+              { id: "cat/type/hom/arg/codom", var: "cat/term/compose/var/b" }
+            ]
+          }
+          {
+            id: "cat/term/compose/arg/g"
+            name: "g"
+            type: "cat/type/hom"
+            args: [
+              { id: "cat/type/hom/arg/dom", var: "cat/term/id/var/b" }
+              { id: "cat/type/hom/arg/codom", var: "cat/term/id/var/c" }
+            ]
+          }
+        ]
+        lhs: {}
+        rhs: {}
+      }
+    ]
+  )
+}
+
+mutation add_cat_operators {
+  addOperators(
+    input: [
+      { id: "cat/op/compose", symbol: "⋅", term: "compose" }
+      { id: "cat/op/Hom", symbol: "→", type: "Hom" }
+    ]
+  )
+}
